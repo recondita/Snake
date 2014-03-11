@@ -19,7 +19,7 @@ public class Snake extends Thread
 		kopfX = lastX = x;
 		kopfY = lastY = y;
 		this.brett = brett;
-		this.richtung = richtung + 1;
+		this.richtung = richtung - 1;
 		this.wait = warte;
 		start();
 	}
