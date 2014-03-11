@@ -17,7 +17,7 @@ public class Snake extends Thread
 		kopfX = lastX = x;
 		kopfY = lastY = y;
 		this.brett = brett;
-		this.richtung = richtung+1;
+		this.richtung = richtung + 1;
 		this.wait = warte;
 		start();
 	}
@@ -41,11 +41,11 @@ public class Snake extends Thread
 	{
 		richtung = 2;
 	}
-	
+
 	public void apfel(int x, int y)
 	{
-		apfelX=x;
-		apfelY=y;
+		apfelX = x;
+		apfelY = y;
 	}
 
 	private class SnakeList
@@ -60,36 +60,51 @@ public class Snake extends Thread
 			this.x = x;
 			this.y = y;
 		}
+		
+		private SnakeList(int x, int y, SnakeList next)
+		{
+			this.x = x;
+			this.y = y;
+			this.next=next;
+		}
 
 		public boolean move(int x, int y)
 		{
 			if (x < 0 || y < 0 || x > brett.getHoehe() || y > brett.getBreite())
 				return false;
-			SnakeList last = this.next;
-			if (next != null)
+			if (x != apfelX || y != apfelY)
 			{
-				SnakeList temp = this.next;
-				while (next.next != null)
+				SnakeList last = this.next;
+				if (next != null)
 				{
-					if (x == temp.x && y == temp.y)
-						return false;
-					if (temp.next.next == null)
+					SnakeList temp = this.next;
+					while (next.next != null)
 					{
-						last = temp.next;
-						temp.next = null;
+						if (x == temp.x && y == temp.y)
+							return false;
+						if (temp.next.next == null)
+						{
+							last = temp.next;
+							temp.next = null;
+						}
+						temp = temp.next;
 					}
-					temp = temp.next;
+
+					last.next = this;
 				}
+				lastX = last.x;
+				lastY = last.y;
+				kopfX = last.x = x;
+				kopfY = last.y = y;
+				snake = last;
 
-				last.next = this;
+				return true;
 			}
-			lastX = last.x;
-			lastY = last.y;
-			kopfX = last.x = x;
-			kopfY = last.y = y;
-			snake = last;
-
+			
+			
+			this.next=new SnakeList(x,y,this.next);
 			return true;
+			
 		}
 
 	}
