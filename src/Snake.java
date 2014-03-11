@@ -5,19 +5,36 @@ public class Snake
 	private int kopfY;
 	private int lastX;
 	private int lastY;
-	
-	public Snake(int x, int y)
+	private int richtung;
+
+	public Snake(int x, int y, int richtung)
 	{
 		snake = new SnakeList(x, y);
-		kopfX=lastX=x;
-		kopfY=lastY=y;
+		kopfX = lastX = x;
+		kopfY = lastY = y;
+		this.richtung = richtung;
 	}
 
-	public boolean move(int richtung)
+	public boolean links()
 	{
-		return false;
+		richtung++;
+		return gerade();
 	}
-	
+
+	public boolean rechts()
+	{
+		richtung++;
+		return gerade();
+	}
+
+	public boolean gerade()
+	{
+		synchronized(this)
+		{
+			return snake.move(kopfX+(richtung&1-(richtung&2*richtung&1)),kopfY+((((richtung&2)-(richtung&4))/2)*(1-(richtung&1))));
+		}
+	}
+
 	private class SnakeList
 	{
 
@@ -31,27 +48,60 @@ public class Snake
 			this.y = y;
 		}
 
-		
-		public SnakeList move(int x, int y)
+		public boolean move(int x, int y)
 		{
 
-				SnakeList last=this.next,next = this.next;
-				while (next != null)
+			SnakeList last = this.next;
+			if (next != null)
+			{
+				SnakeList temp = this.next;
+				while (next.next != null)
 				{
-					if(x==next.x&&y==next.y)
-						return null;
-					if(next.next.next==null)
+					if (x == temp.x && y == temp.y)
+						return false;
+					if (temp.next.next == null)
 					{
-						last=next.next;
-						next.next=null;						
+						last = temp.next;
+						temp.next = null;
 					}
-					next = next.next;
-
+					temp = temp.next;
 				}
-				
-				return last;
+
+				last.next = this;
+			}
+			lastX = last.x;
+			lastY = last.y;
+			kopfX = last.x = x;
+			kopfY = last.y = y;
+			snake = last;
+
+			return true;
 		}
 
+	}
 
+	public int getKopfX()
+	{
+		return kopfX;
+	}
+
+	public int getKopfY()
+	{
+		return kopfY;
+	}
+
+	public int getLastX()
+	{
+		return lastX;
+	}
+
+	public int getLastY()
+	{
+		return lastY;
+	}
+
+	public int getRichtung()
+	{
+		return richtung;
 	}
 }
