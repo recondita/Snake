@@ -39,7 +39,6 @@ public class GUI extends JFrame implements KeyListener
 		if (e.getKeyChar() == 'w')
 		{
 			brett.snake.hoch();
-			System.out.println("Vorwärts");
 		}
 		if (e.getKeyChar() == 'd')
 		{

@@ -72,7 +72,6 @@ public class Snake extends Thread
 
 		public byte move(int x, int y)
 		{
-			System.out.println(richtung + 1);
 			if (x < 0 || y < 0 || x >= brett.getBreite()
 					|| y >= brett.getHoehe()||brett.belegt(x, y))
 				return -1;
