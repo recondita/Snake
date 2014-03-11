@@ -81,9 +81,7 @@ public class Snake extends Thread
 				SnakeList last = this;
 				if (next != null)
 				{
-					if (next.next != null)
-					{
-						SnakeList temp = this.next;
+						SnakeList temp = this;
 						while (temp != null)
 						{
 							if (x == temp.x && y == temp.y)
@@ -97,7 +95,6 @@ public class Snake extends Thread
 						} 
 
 						last.next = this;
-					}
 				}
 				lastX = last.x;
 				lastY = last.y;
@@ -162,10 +159,10 @@ public class Snake extends Thread
 
 	private void aktualisiereBrett()
 	{
+		brett.kopf(kopfX, kopfY);
 		if (lastX >= 0 && lastY >= 0)
 		{
-			brett.loesche(lastX, lastY);
-			brett.kopf(kopfX, kopfY);
+			brett.loesche(lastX, lastY);			
 		}
 		brett.repaint();
 	}

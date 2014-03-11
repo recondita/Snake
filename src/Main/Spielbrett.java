@@ -61,7 +61,7 @@ public class Spielbrett extends JPanel
 	public void kopf(int x, int y)
 	{
 		feld[kopfCacheX][kopfCacheY]=30+feld[kopfCacheX][kopfCacheY]%10;
-		feld[x][y]=10+((x==kopfCacheX)?((x>kopfCacheX)?4:2):((y>kopfCacheY)?1:3));
+		feld[x][y]=10+((x!=kopfCacheX)?((x>kopfCacheX)?2:4):((y>kopfCacheY)?3:1));
 		kopfCacheX=x;
 		kopfCacheY=y;
 	}
