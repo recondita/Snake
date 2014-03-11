@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -74,12 +75,12 @@ public class Spielbrett extends JPanel
 	{
 		BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = image.createGraphics();
+		Image ground=new Image();
 		for(int i=0;i<breite;i++)
 		{
 			for(int j=0;j<hoehe;j++)
 			{
-				g2d.fillRect(getWidth() / breite * j, getHeight() / hoehe * i, getWidth() / breite,
-						getHeight() / hoehe);
+				g2d.drawImage(ground, x, y, width, height, observer)
 			}
 		}
 	}
