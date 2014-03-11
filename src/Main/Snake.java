@@ -26,22 +26,22 @@ public class Snake extends Thread
 
 	public void links()
 	{
-		richtung = 1;
+		richtung = 3;
 	}
 
 	public void rechts()
 	{
-		richtung = 3;
+		richtung = 1;
 	}
 
 	public void hoch()
 	{
-		richtung = 0;
+		richtung = 2;
 	}
 
 	public void runter()
 	{
-		richtung = 2;
+		richtung = 0;
 	}
 
 	public void apfel(int x, int y)
@@ -72,6 +72,7 @@ public class Snake extends Thread
 
 		public byte move(int x, int y)
 		{
+			System.out.println(richtung+1);
 			if (x < 0 || y < 0 || x > brett.getHoehe() || y > brett.getBreite())
 				return -1;
 			if (x != apfelX || y != apfelY)
