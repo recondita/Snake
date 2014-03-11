@@ -14,6 +14,7 @@ public class Spielbrett extends JPanel
 	int breite = 40;
 	int hoehe = 30;
 	int[][] feld = new int[breite][hoehe];
+	GUI gUI;
 
 	/*
 	 * 0=nichts 1=Apfel 10=Schlangenkopf 11=Schlangenkopf nach oben
@@ -27,6 +28,7 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett(GUI gUI)
 	{
+		this.gUI=gUI;
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
