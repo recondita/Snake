@@ -1,3 +1,4 @@
+package Main;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,11 +10,12 @@ public class GUI extends JFrame implements KeyListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	Spielbrett brett=new Spielbrett(this);
-	Snake snake=new Snake(brett.getBreite()/2,brett.getHoehe()/2,1,(long)250, brett);
+	Spielbrett brett;
 	
 	public GUI()
 	{
+		brett=new Spielbrett();
+		
 		setLayout(new GridLayout(1,1));
 		add(brett);
 		setSize(brett.getBreite()*10, brett.getHoehe()*10);
@@ -34,19 +36,19 @@ public class GUI extends JFrame implements KeyListener
 	{
 		if (e.getKeyChar() == 'w')
 		{
-			snake.hoch();
+			brett.snake.hoch();
 		}
 		if (e.getKeyChar() == 'd')
 		{
-			snake.rechts();
+			brett.snake.rechts();
 		}
 		if (e.getKeyChar() == 'a')
 		{
-			snake.links();
+			brett.snake.links();
 		}
 		if (e.getKeyChar() == 's')
 		{
-			snake.runter();
+			brett.snake.runter();
 		}
 	}
 	

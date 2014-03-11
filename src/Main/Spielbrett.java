@@ -1,3 +1,4 @@
+package Main;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -14,7 +15,7 @@ public class Spielbrett extends JPanel
 	int breite = 40;
 	int hoehe = 30;
 	int[][] feld = new int[breite][hoehe];
-	GUI gUI;
+	Snake snake;
 
 	/*
 	 * 0=nichts 1=Apfel 10=Schlangenkopf 11=Schlangenkopf nach oben
@@ -26,9 +27,9 @@ public class Spielbrett extends JPanel
 	 * 40+=Ecke
 	 */
 
-	public Spielbrett(GUI gUI)
+	public Spielbrett()
 	{
-		this.gUI=gUI;
+		snake=new Snake(getBreite()/2,getHoehe()/2,1,(long)250, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -58,7 +59,7 @@ public class Spielbrett extends JPanel
 			if (feld[x][y] == 0)
 			{
 				feld[x][y] = 1;
-				gUI.snake.apfel(x,y);
+				snake.apfel(x,y);
 				
 			} else
 				neuerApfel();

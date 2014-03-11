@@ -1,3 +1,4 @@
+package Main;
 public class Snake extends Thread
 {
 	private SnakeList snake;
