@@ -18,7 +18,8 @@ public class GUI extends JFrame implements KeyListener
 		setTitle("Super-Snake");
 		setLayout(new GridLayout(1,1));
 		add(brett);
-		setSize(brett.getBreite()*10, brett.getHoehe()*10);
+		addKeyListener(this);
+		setSize(brett.getBreite()*20, brett.getHoehe()*20);
 		setVisible(true);
 	}
 
@@ -37,6 +38,7 @@ public class GUI extends JFrame implements KeyListener
 		if (e.getKeyChar() == 'w')
 		{
 			brett.snake.hoch();
+			System.out.println("Vorwärts");
 		}
 		if (e.getKeyChar() == 'd')
 		{
