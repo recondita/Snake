@@ -1,4 +1,5 @@
 package Main;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -29,7 +30,7 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		snake=new Snake(getBreite()/2,getHoehe()/2,1,(long)250, this);
+		snake = new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 250, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -59,8 +60,8 @@ public class Spielbrett extends JPanel
 			if (feld[x][y] == 0)
 			{
 				feld[x][y] = 1;
-				snake.apfel(x,y);
-				
+				snake.apfel(x, y);
+
 			} else
 				neuerApfel();
 		}
@@ -88,20 +89,26 @@ public class Spielbrett extends JPanel
 		Graphics2D g2d = image.createGraphics();
 		int width = getWidth() / breite;
 		int height = getHeight() / hoehe;
-		BufferedImage grund = null;
-		BufferedImage kopf = null;
-		BufferedImage schwanz = null;
-		BufferedImage koerper = null;
-		BufferedImage kurve = null;
-		BufferedImage apfel = null;
+		BufferedImage grund = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage kopf = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage schwanz = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage koerper = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage kurve = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
+		BufferedImage apfel = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_ARGB);
 		try
 		{
-			grund = ImageIO.read(new File("Boden.png"));
-			kopf = ImageIO.read(new File("Snake_Kopf.png"));
-			schwanz = ImageIO.read(new File("../bilder/Snake_Schwanz.png"));
-			koerper = ImageIO.read(new File("../bilder/Snake_Koerper.png"));
-			kurve = ImageIO.read(new File("../bilder/Snake_Kurve.png"));
-			apfel = ImageIO.read(new File("../bilder/apfel.png"));
+			grund = ImageIO.read(new File("res/Boden.png"));
+			kopf = ImageIO.read(new File("res/Snake_Kopf.png"));
+			schwanz = ImageIO.read(new File("res/Snake_Schwanz.png"));
+			koerper = ImageIO.read(new File("res/Snake_Koerper.png"));
+			kurve = ImageIO.read(new File("res/Snake_Kurve.png"));
+			apfel = ImageIO.read(new File("res/apfel.png"));
 		} catch (IOException e)
 		{
 			System.out.println("Bild nicht gefunden!");
@@ -117,22 +124,25 @@ public class Spielbrett extends JPanel
 				if (feld[i][j] == 1)
 				{
 					g2d.drawImage(apfel, x, y, width, height, null);
-				} else if (feld[i][j] < 20)
+				} else if (feld[i][j] > 5)
 				{
-					g2d.drawImage(drehen(kopf, deg(feld[i][j] - 20)), x, y,
-							width, height, null);
-				} else if (feld[i][j] < 30)
-				{
-					g2d.drawImage(drehen(schwanz, deg(feld[i][j] - 30)), x, y,
-							width, height, null);
-				} else if (feld[i][j] < 40)
-				{
-					g2d.drawImage(drehen(koerper, (feld[i][j] - 40)), x, y,
-							width, height, null);
-				} else
-				{
-					g2d.drawImage(drehen(kurve, (feld[i][j] - 50)), x, y,
-							width, height, null);
+					if (feld[i][j] < 20)
+					{
+						g2d.drawImage(drehen(kopf, deg(feld[i][j] - 20)), x, y,
+								width, height, null);
+					} else if (feld[i][j] < 30)
+					{
+						g2d.drawImage(drehen(schwanz, deg(feld[i][j] - 30)), x,
+								y, width, height, null);
+					} else if (feld[i][j] < 40)
+					{
+						g2d.drawImage(drehen(koerper, (feld[i][j] - 40)), x, y,
+								width, height, null);
+					} else
+					{
+						g2d.drawImage(drehen(kurve, (feld[i][j] - 50)), x, y,
+								width, height, null);
+					}
 				}
 			}
 		}
