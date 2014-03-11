@@ -1,4 +1,4 @@
-public class Snake
+public class Snake extends Thread
 {
 	private SnakeList snake;
 	private int kopfX;
@@ -6,45 +6,38 @@ public class Snake
 	private int lastX;
 	private int lastY;
 	private Spielbrett brett;
+	private int richtung;
+	private long wait;
 
-	public Snake(int x, int y, Spielbrett brett)
+	public Snake(int x, int y, Spielbrett brett, int richtung, long warte)
 	{
 		snake = new SnakeList(x, y);
 		kopfX = lastX = x;
 		kopfY = lastY = y;
-		this.brett=brett;
+		this.brett = brett;
+		this.richtung = richtung+1;
+		this.wait = warte;
+		start();
 	}
 
-	public boolean links()
+	public void links()
 	{
-		synchronized (this)
-		{
-			return snake.move(kopfX+1, kopfY);
-		}
+		richtung = 1;
 	}
 
-	public boolean rechts()
+	public void rechts()
 	{
-		synchronized (this)
-		{
-			return snake.move(kopfX-1, kopfY);
-		}
+		richtung = 3;
 	}
 
-	public boolean hoch()
+	public void hoch()
 	{
-		synchronized (this)
-		{
-			return snake.move(kopfX, kopfY + 1);
-		}
+		richtung = 0;
 	}
-	
-	public boolean runter()
+
+	public void runter()
 	{
-		synchronized (this)
-		{
-			return snake.move(kopfX, kopfY + -1);
-		}
+		richtung = 2;
 	}
 
 	private class SnakeList
@@ -62,7 +55,7 @@ public class Snake
 
 		public boolean move(int x, int y)
 		{
-			if(x<0||y<0||x>brett.getHoehe()||y>brett.getBreite())
+			if (x < 0 || y < 0 || x > brett.getHoehe() || y > brett.getBreite())
 				return false;
 			SnakeList last = this.next;
 			if (next != null)
@@ -113,4 +106,20 @@ public class Snake
 		return lastY;
 	}
 
+	public void run()
+	{
+		boolean ok = true;
+		while (ok)
+		{
+			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
+					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
+			try
+			{
+				Thread.sleep(wait);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 }
