@@ -15,7 +15,7 @@ public class GUI extends JFrame implements KeyListener
 	public GUI()
 	{
 		brett=new Spielbrett();
-		
+		setTitle("Super-Snake");
 		setLayout(new GridLayout(1,1));
 		add(brett);
 		setSize(brett.getBreite()*10, brett.getHoehe()*10);
