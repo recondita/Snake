@@ -8,6 +8,8 @@ public class Snake extends Thread
 	private Spielbrett brett;
 	private int richtung;
 	private long wait;
+	private int apfelX;
+	private int apfelY;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -42,7 +44,8 @@ public class Snake extends Thread
 	
 	public void apfel(int x, int y)
 	{
-		
+		apfelX=x;
+		apfelY=y;
 	}
 
 	private class SnakeList
@@ -116,8 +119,6 @@ public class Snake extends Thread
 		boolean ok = true;
 		while (ok)
 		{
-			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
-					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
 			try
 			{
 				Thread.sleep(wait);
@@ -125,6 +126,9 @@ public class Snake extends Thread
 			{
 				e.printStackTrace();
 			}
+			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
+					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
+			brett.repaint();
 		}
 	}
 }
