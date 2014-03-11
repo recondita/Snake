@@ -5,33 +5,43 @@ public class Snake
 	private int kopfY;
 	private int lastX;
 	private int lastY;
-	private int richtung;
 
-	public Snake(int x, int y, int richtung)
+	public Snake(int x, int y)
 	{
 		snake = new SnakeList(x, y);
 		kopfX = lastX = x;
 		kopfY = lastY = y;
-		this.richtung = richtung;
 	}
 
 	public boolean links()
 	{
-		richtung++;
-		return gerade();
+		synchronized (this)
+		{
+			return snake.move(kopfX+1, kopfY);
+		}
 	}
 
 	public boolean rechts()
 	{
-		richtung++;
-		return gerade();
+		synchronized (this)
+		{
+			return snake.move(kopfX-1, kopfY);
+		}
 	}
 
-	public boolean gerade()
+	public boolean hoch()
 	{
-		synchronized(this)
+		synchronized (this)
 		{
-			return snake.move(kopfX+(richtung&1-(richtung&2*richtung&1)),kopfY+((((richtung&2)-(richtung&4))/2)*(1-(richtung&1))));
+			return snake.move(kopfX, kopfY + 1);
+		}
+	}
+	
+	public boolean runter()
+	{
+		synchronized (this)
+		{
+			return snake.move(kopfX, kopfY + -1);
 		}
 	}
 
@@ -100,8 +110,4 @@ public class Snake
 		return lastY;
 	}
 
-	public int getRichtung()
-	{
-		return richtung;
-	}
 }
