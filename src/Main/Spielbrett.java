@@ -16,6 +16,8 @@ public class Spielbrett extends JPanel
 	int breite = 40;
 	int hoehe = 30;
 	int[][] feld = new int[breite][hoehe];
+	private int kopfCacheX;
+	private int kopfCacheY;
 	Snake snake;
 
 	/*
@@ -30,7 +32,9 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		snake = new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 250, this);
+		kopfCacheX=getBreite() / 2;
+		 kopfCacheY=getHoehe() / 2;
+		snake = new Snake(kopfCacheX, kopfCacheY , 1, (long) 250, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -41,6 +45,26 @@ public class Spielbrett extends JPanel
 		neuerApfel();
 	}
 
+	public void loesche(int x, int y)
+	{
+		if(feld[x][y]>20&&feld[x][y]<=24)
+		{
+			int richtung=feld[x][y]-21;
+			int neuX=x + (richtung & 1) * (1 - (richtung & 2));
+			int neuY=y+(1 - (richtung & 1)) * (1 - (richtung & 2));
+			feld[neuX][neuY]=20+feld[neuX][neuY]%10;
+		}
+		feld[x][y]=0;
+	}
+	
+
+	public void kopf(int x, int y)
+	{
+		feld[kopfCacheX][kopfCacheY]=30+feld[kopfCacheX][kopfCacheY]%10;
+		feld[x][y]=10+((x==kopfCacheX)?((x>kopfCacheX)?4:2):((y>kopfCacheY)?1:3));
+	}
+	
+	
 	public int getBreite()
 	{
 		return breite;

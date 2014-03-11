@@ -156,7 +156,8 @@ public class Snake extends Thread
 	{
 		if (lastX >= 0 && lastY >= 0)
 		{
-
+			brett.loesche(lastX, lastY);
+			brett.kopf(kopfX, kopfY);
 		}
 		brett.repaint();
 	}
