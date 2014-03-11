@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class Spielbrett extends JPanel
 	 * 22=Schlangenschwanz nach rechts 23=Schlangenschwanz nach unten
 	 * 24=Schlangenschwanz nach links 30=Schlange 31=Schlange nach oben
 	 * 32=Schlange nach rechts 33=Schlange nach unten 34=Schlange nach links
+	 * 40+=Ecke
 	 */
 
 	public Spielbrett()
@@ -33,6 +35,16 @@ public class Spielbrett extends JPanel
 			}
 		}
 		neuerApfel();
+	}
+	
+	public int getBreite()
+	{
+		return breite;
+	}
+	
+	public int getHoehe()
+	{
+		return hoehe;
 	}
 
 	public void neuerApfel()
@@ -96,22 +108,56 @@ public class Spielbrett extends JPanel
 			{
 				int y = getHeight() / hoehe * j;
 				g2d.drawImage(grund, x, y, width, height, null);
-				if(feld[i][j]==1)
+				if (feld[i][j] == 1)
 				{
 					g2d.drawImage(apfel, x, y, width, height, null);
-				}
-				else if(feld[i][j]<20)
+				} else if (feld[i][j] < 20)
 				{
-					g2d.drawImage(kopf, x, y, width, height, null);
-				}
-				else if(feld[i][j]<30)
+					g2d.drawImage(drehen(kopf,deg(feld[i][j]-20)), x, y, width, height, null);
+				} else if (feld[i][j] < 30)
 				{
-					g2d.drawImage(schwanz, x, y, width, height, null);
+					g2d.drawImage(drehen(schwanz,deg(feld[i][j]-30)), x, y, width, height, null);
+				} else if (feld[i][j] < 40)
+				{
+					g2d.drawImage(drehen(koerper,(feld[i][j]-40)), x, y, width, height, null);
+				} else
+				{
+					g2d.drawImage(drehen(kurve,(feld[i][j]-50)), x, y, width, height, null);
 				}
 			}
 		}
 		return image;
 	}
+	
+	private double deg(int r)
+	{
+		if((r-2)%10==0)
+		{
+			return 90.0;
+		}
+		if((r-3)%10==0)
+		{
+			return 180.0;
+		}
+		if((r-4)%10==0)
+		{
+			return 270.0;
+		}
+		return 0.0;
+	}
+	
+	private BufferedImage drehen(BufferedImage src, double degrees) {
+        AffineTransform affineTransform = AffineTransform.getRotateInstance(
+                Math.toRadians(degrees),
+                src.getWidth() / 2,
+                src.getHeight() / 2);
+        BufferedImage rotatedImage = new BufferedImage(src.getWidth(), src
+                .getHeight(), src.getType());
+        Graphics2D g = (Graphics2D) rotatedImage.getGraphics();
+        g.setTransform(affineTransform);
+        g.drawImage(src, 0, 0, null);
+        return rotatedImage;
+    }
 
 	protected void paintComponent(Graphics g)
 	{
