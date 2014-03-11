@@ -9,7 +9,7 @@ public class Snake extends Thread
 	private int richtung;
 	private long wait;
 
-	public Snake(int x, int y, Spielbrett brett, int richtung, long warte)
+	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
 		snake = new SnakeList(x, y);
 		kopfX = lastX = x;
@@ -38,6 +38,11 @@ public class Snake extends Thread
 	public void runter()
 	{
 		richtung = 2;
+	}
+	
+	public void apfel(int x, int y)
+	{
+		
 	}
 
 	private class SnakeList
