@@ -25,7 +25,7 @@ public class Spielbrett extends JPanel
 	 * 40+=Ecke
 	 */
 
-	public Spielbrett()
+	public Spielbrett(GUI gUI)
 	{
 		for (int i = 0; i < breite; i++)
 		{
@@ -36,12 +36,12 @@ public class Spielbrett extends JPanel
 		}
 		neuerApfel();
 	}
-	
+
 	public int getBreite()
 	{
 		return breite;
 	}
-	
+
 	public int getHoehe()
 	{
 		return hoehe;
@@ -51,12 +51,15 @@ public class Spielbrett extends JPanel
 	{
 		if (!voll())
 		{
-			int x = (int) (Math.random() * breite + 1);
-			int y = (int) (Math.random() * hoehe + 1);
+			int x = (int) (Math.random() * breite);
+			int y = (int) (Math.random() * hoehe);
 			if (feld[x][y] == 0)
 			{
 				feld[x][y] = 1;
-			}
+				gUI.snake.apfel(x,y);
+				
+			} else
+				neuerApfel();
 		}
 	}
 
@@ -90,12 +93,12 @@ public class Spielbrett extends JPanel
 		BufferedImage apfel = null;
 		try
 		{
-			grund = ImageIO.read(new File("/bilder/Boden.png"));
-			kopf = ImageIO.read(new File("/bilder/Snake_Kopf.png"));
-			schwanz = ImageIO.read(new File("/bilder/Snake_Schwanz.png"));
-			koerper = ImageIO.read(new File("/bilder/Snake_Koerper.png"));
-			kurve = ImageIO.read(new File("/bilder/Snake_Kurve.png"));
-			apfel = ImageIO.read(new File("/bilder/apfel.png"));
+			grund = ImageIO.read(new File("Boden.png"));
+			kopf = ImageIO.read(new File("Snake_Kopf.png"));
+			schwanz = ImageIO.read(new File("../bilder/Snake_Schwanz.png"));
+			koerper = ImageIO.read(new File("../bilder/Snake_Koerper.png"));
+			kurve = ImageIO.read(new File("../bilder/Snake_Kurve.png"));
+			apfel = ImageIO.read(new File("../bilder/apfel.png"));
 		} catch (IOException e)
 		{
 			System.out.println("Bild nicht gefunden!");
@@ -113,51 +116,55 @@ public class Spielbrett extends JPanel
 					g2d.drawImage(apfel, x, y, width, height, null);
 				} else if (feld[i][j] < 20)
 				{
-					g2d.drawImage(drehen(kopf,deg(feld[i][j]-20)), x, y, width, height, null);
+					g2d.drawImage(drehen(kopf, deg(feld[i][j] - 20)), x, y,
+							width, height, null);
 				} else if (feld[i][j] < 30)
 				{
-					g2d.drawImage(drehen(schwanz,deg(feld[i][j]-30)), x, y, width, height, null);
+					g2d.drawImage(drehen(schwanz, deg(feld[i][j] - 30)), x, y,
+							width, height, null);
 				} else if (feld[i][j] < 40)
 				{
-					g2d.drawImage(drehen(koerper,(feld[i][j]-40)), x, y, width, height, null);
+					g2d.drawImage(drehen(koerper, (feld[i][j] - 40)), x, y,
+							width, height, null);
 				} else
 				{
-					g2d.drawImage(drehen(kurve,(feld[i][j]-50)), x, y, width, height, null);
+					g2d.drawImage(drehen(kurve, (feld[i][j] - 50)), x, y,
+							width, height, null);
 				}
 			}
 		}
 		return image;
 	}
-	
+
 	private double deg(int r)
 	{
-		if((r-2)%10==0)
+		if ((r - 2) % 10 == 0)
 		{
 			return 90.0;
 		}
-		if((r-3)%10==0)
+		if ((r - 3) % 10 == 0)
 		{
 			return 180.0;
 		}
-		if((r-4)%10==0)
+		if ((r - 4) % 10 == 0)
 		{
 			return 270.0;
 		}
 		return 0.0;
 	}
-	
-	private BufferedImage drehen(BufferedImage src, double degrees) {
-        AffineTransform affineTransform = AffineTransform.getRotateInstance(
-                Math.toRadians(degrees),
-                src.getWidth() / 2,
-                src.getHeight() / 2);
-        BufferedImage rotatedImage = new BufferedImage(src.getWidth(), src
-                .getHeight(), src.getType());
-        Graphics2D g = (Graphics2D) rotatedImage.getGraphics();
-        g.setTransform(affineTransform);
-        g.drawImage(src, 0, 0, null);
-        return rotatedImage;
-    }
+
+	private BufferedImage drehen(BufferedImage src, double degrees)
+	{
+		AffineTransform affineTransform = AffineTransform.getRotateInstance(
+				Math.toRadians(degrees), src.getWidth() / 2,
+				src.getHeight() / 2);
+		BufferedImage rotatedImage = new BufferedImage(src.getWidth(),
+				src.getHeight(), src.getType());
+		Graphics2D g = (Graphics2D) rotatedImage.getGraphics();
+		g.setTransform(affineTransform);
+		g.drawImage(src, 0, 0, null);
+		return rotatedImage;
+	}
 
 	protected void paintComponent(Graphics g)
 	{
