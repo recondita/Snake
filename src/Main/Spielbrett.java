@@ -45,6 +45,11 @@ public class Spielbrett extends JPanel
 		neuerApfel();
 	}
 
+	public boolean belegt(int x, int y)
+	{
+		return feld[x][y]>1;
+	}
+	
 	public void loesche(int x, int y)
 	{
 		if(feld[x][y]>20&&feld[x][y]<=24)

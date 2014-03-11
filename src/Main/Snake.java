@@ -74,7 +74,7 @@ public class Snake extends Thread
 		{
 			System.out.println(richtung + 1);
 			if (x < 0 || y < 0 || x >= brett.getBreite()
-					|| y >= brett.getHoehe())
+					|| y >= brett.getHoehe()||brett.belegt(x, y))
 				return -1;
 			if (x != apfelX || y != apfelY)
 			{
@@ -84,8 +84,8 @@ public class Snake extends Thread
 						SnakeList temp = this;
 						while (temp != null)
 						{
-							if (x == temp.x && y == temp.y)
-								return -1;
+							//if (x == temp.x && y == temp.y)
+							//	return -1;
 							if (temp.next.next == null)
 							{
 								last = temp.next;
