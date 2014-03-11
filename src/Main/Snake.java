@@ -72,28 +72,32 @@ public class Snake extends Thread
 
 		public byte move(int x, int y)
 		{
-			System.out.println(richtung+1);
-			if (x < 0 || y < 0 || x > brett.getHoehe() || y > brett.getBreite())
+			System.out.println(richtung + 1);
+			if (x < 0 || y < 0 || x >= brett.getBreite()
+					|| y >= brett.getHoehe())
 				return -1;
 			if (x != apfelX || y != apfelY)
 			{
 				SnakeList last = this;
 				if (next != null)
 				{
-					SnakeList temp = this.next;
-					while (next.next != null)
+					if (next.next != null)
 					{
-						if (x == temp.x && y == temp.y)
-							return -1;
-						if (temp.next.next == null)
+						SnakeList temp = this.next;
+						while (temp != null)
 						{
-							last = temp.next;
-							temp.next = null;
-						}
-						temp = temp.next;
-					}
+							if (x == temp.x && y == temp.y)
+								return -1;
+							if (temp.next.next == null)
+							{
+								last = temp.next;
+								temp.next = null;
+							}
+							temp = temp.next;
+						} 
 
-					last.next = this;
+						last.next = this;
+					}
 				}
 				lastX = last.x;
 				lastY = last.y;
@@ -106,7 +110,9 @@ public class Snake extends Thread
 
 			lastX = -1;
 			lastY = -1;
-			this.next = new SnakeList(x, y, this.next);
+			snake = new SnakeList(x, y, snake);
+			kopfX = x;
+			kopfY = y;
 			return 1;
 
 		}
@@ -138,6 +144,7 @@ public class Snake extends Thread
 		int ok = 0;
 		while (ok >= 0)
 		{
+			aktualisiereBrett();
 			try
 			{
 				Thread.sleep(wait);
@@ -149,8 +156,8 @@ public class Snake extends Thread
 					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
 			if (ok == 1)
 				brett.neuerApfel();
-			aktualisiereBrett();
 		}
+		System.out.println("Game Over");
 	}
 
 	private void aktualisiereBrett()
