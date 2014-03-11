@@ -1,4 +1,5 @@
 package Main;
+
 public class Snake extends Thread
 {
 	private SnakeList snake;
@@ -61,28 +62,28 @@ public class Snake extends Thread
 			this.x = x;
 			this.y = y;
 		}
-		
+
 		private SnakeList(int x, int y, SnakeList next)
 		{
 			this.x = x;
 			this.y = y;
-			this.next=next;
+			this.next = next;
 		}
 
-		public boolean move(int x, int y)
+		public byte move(int x, int y)
 		{
 			if (x < 0 || y < 0 || x > brett.getHoehe() || y > brett.getBreite())
-				return false;
+				return -1;
 			if (x != apfelX || y != apfelY)
 			{
-				SnakeList last = this.next;
+				SnakeList last = this;
 				if (next != null)
 				{
 					SnakeList temp = this.next;
 					while (next.next != null)
 					{
 						if (x == temp.x && y == temp.y)
-							return false;
+							return -1;
 						if (temp.next.next == null)
 						{
 							last = temp.next;
@@ -99,13 +100,14 @@ public class Snake extends Thread
 				kopfY = last.y = y;
 				snake = last;
 
-				return true;
+				return 0;
 			}
-			
-			
-			this.next=new SnakeList(x,y,this.next);
-			return true;
-			
+
+			lastX = -1;
+			lastY = -1;
+			this.next = new SnakeList(x, y, this.next);
+			return 1;
+
 		}
 
 	}
@@ -132,8 +134,8 @@ public class Snake extends Thread
 
 	public void run()
 	{
-		boolean ok = true;
-		while (ok)
+		int ok = 0;
+		while (ok >= 0)
 		{
 			try
 			{
@@ -144,7 +146,18 @@ public class Snake extends Thread
 			}
 			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
 					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
-			brett.repaint();
+			if (ok == 1)
+				brett.neuerApfel();
+			aktualisiereBrett();
 		}
+	}
+
+	private void aktualisiereBrett()
+	{
+		if (lastX >= 0 && lastY >= 0)
+		{
+
+		}
+		brett.repaint();
 	}
 }
