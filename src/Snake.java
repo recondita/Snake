@@ -5,12 +5,14 @@ public class Snake
 	private int kopfY;
 	private int lastX;
 	private int lastY;
+	private Spielbrett brett;
 
-	public Snake(int x, int y)
+	public Snake(int x, int y, Spielbrett brett)
 	{
 		snake = new SnakeList(x, y);
 		kopfX = lastX = x;
 		kopfY = lastY = y;
+		this.brett=brett;
 	}
 
 	public boolean links()
@@ -60,7 +62,8 @@ public class Snake
 
 		public boolean move(int x, int y)
 		{
-
+			if(x<0||y<0||x>brett.getHoehe()||y>brett.getBreite())
+				return false;
 			SnakeList last = this.next;
 			if (next != null)
 			{
