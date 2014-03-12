@@ -34,7 +34,7 @@ public class Spielbrett extends JPanel
 	{
 		kopfCacheX=getBreite() / 2;
 		 kopfCacheY=getHoehe() / 2;
-		snake = new Snake(kopfCacheX, kopfCacheY , 1, (long) 250, this);
+		snake = new Snake(kopfCacheX, kopfCacheY , 1, (long) 150, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -50,18 +50,16 @@ public class Spielbrett extends JPanel
 		return feld[x][y]>1;
 	}
 	
-	public void loesche(int x, int y)
+	public void loesche(int x, int y, int schwanzX, int schwanzY)
 	{
-		if(feld[x][y]>20&&feld[x][y]<=24)
-		{
-			int richtung=feld[x][y]-21;
-			int neuX=x + (richtung & 1) * (1 - (richtung & 2));
-			int neuY=y+(1 - (richtung & 1)) * (1 - (richtung & 2));
-			feld[neuX][neuY]=20+feld[neuX][neuY]%10;
-		}
-		feld[x][y]=0;
+		loesche(x,y);
+		feld[schwanzX][schwanzY]=20+feld[schwanzX][schwanzY]%10;
 	}
 	
+	public void loesche(int x, int y)
+	{
+		feld[x][y]=0;
+	}
 
 	public void kopf(int x, int y)
 	{
@@ -167,11 +165,11 @@ public class Spielbrett extends JPanel
 								y, width, height, null);
 					} else if (feld[i][j] < 40)
 					{
-						g2d.drawImage(drehen(koerper, (feld[i][j] - 40)), x, y,
+						g2d.drawImage(drehen(koerper, deg(feld[i][j] - 40)), x, y,
 								width, height, null);
 					} else
 					{
-						g2d.drawImage(drehen(kurve, (feld[i][j] - 50)), x, y,
+						g2d.drawImage(drehen(kurve, deg(feld[i][j] - 50)), x, y,
 								width, height, null);
 					}
 				}

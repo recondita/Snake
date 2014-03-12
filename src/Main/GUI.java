@@ -36,19 +36,20 @@ public class GUI extends JFrame implements KeyListener
 
 	public void keyTyped(KeyEvent e)
 	{
-		if (e.getKeyChar() == 'w')
+		char taste=(char) Character.toUpperCase(e.getKeyChar());
+		if (taste == 'W')
 		{
 			brett.snake.hoch();
 		}
-		if (e.getKeyChar() == 'd')
+		if (taste == 'D')
 		{
 			brett.snake.rechts();
 		}
-		if (e.getKeyChar() == 'a')
+		if (taste=='A')
 		{
 			brett.snake.links();
 		}
-		if (e.getKeyChar() == 's')
+		if (taste == 'S')
 		{
 			brett.snake.runter();
 		}
