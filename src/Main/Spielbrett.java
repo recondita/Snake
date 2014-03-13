@@ -13,12 +13,13 @@ import javax.swing.JPanel;
 public class Spielbrett extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	int breite = 40;
-	int hoehe = 30;
+	int breite = 10;
+	int hoehe = 10;
 	int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
-	Snake snake;
+	Snake snake; 
+	private boolean ausgabe=true;
 
 	/*
 	 * 0=nichts 1=Apfel 10=Schlangenkopf 11=Schlangenkopf nach oben
@@ -34,7 +35,7 @@ public class Spielbrett extends JPanel
 	{
 		kopfCacheX = getBreite() / 2;
 		kopfCacheY = getHoehe() / 2;
-		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 150, this);
+		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)

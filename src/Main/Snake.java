@@ -14,6 +14,7 @@ public class Snake extends Thread
 	private int apfelY;
 	public int schwanzX;
 	public int schwanzY;
+	private int laenge=1;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -115,6 +116,7 @@ public class Snake extends Thread
 			snake = new SnakeList(x, y, snake);
 			kopfX = x;
 			kopfY = y;
+			laenge++;
 			return 1;
 
 		}
@@ -159,7 +161,7 @@ public class Snake extends Thread
 			if (ok == 1)
 				brett.neuerApfel();
 		}
-		System.out.println("Game Over");
+		System.out.println("Game Over!!!\nLaenge: "+laenge);
 	}
 
 	private void aktualisiereBrett()
