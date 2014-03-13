@@ -32,9 +32,9 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		kopfCacheX=getBreite() / 2;
-		 kopfCacheY=getHoehe() / 2;
-		snake = new Snake(kopfCacheX, kopfCacheY , 1, (long) 150, this);
+		kopfCacheX = getBreite() / 2;
+		kopfCacheY = getHoehe() / 2;
+		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 150, this);
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -47,29 +47,29 @@ public class Spielbrett extends JPanel
 
 	public boolean belegt(int x, int y)
 	{
-		return feld[x][y]>1;
+		return feld[x][y] > 1;
 	}
-	
+
 	public void loesche(int x, int y, int schwanzX, int schwanzY)
 	{
-		loesche(x,y);
-		feld[schwanzX][schwanzY]=20+feld[schwanzX][schwanzY]%10;
+		loesche(x, y);
+		feld[schwanzX][schwanzY] = 20 + feld[schwanzX][schwanzY] % 10;
 	}
-	
+
 	public void loesche(int x, int y)
 	{
-		feld[x][y]=0;
+		feld[x][y] = 0;
 	}
 
 	public void kopf(int x, int y)
 	{
-		feld[kopfCacheX][kopfCacheY]=30+feld[kopfCacheX][kopfCacheY]%10;
-		feld[x][y]=10+((x!=kopfCacheX)?((x>kopfCacheX)?2:4):((y>kopfCacheY)?3:1));
-		kopfCacheX=x;
-		kopfCacheY=y;
+		feld[kopfCacheX][kopfCacheY] = 30 + feld[kopfCacheX][kopfCacheY] % 10;
+		feld[x][y] = 10 + ((x != kopfCacheX) ? ((x > kopfCacheX) ? 2 : 4)
+				: ((y > kopfCacheY) ? 3 : 1));
+		kopfCacheX = x;
+		kopfCacheY = y;
 	}
-	
-	
+
 	public int getBreite()
 	{
 		return breite;
@@ -165,12 +165,12 @@ public class Spielbrett extends JPanel
 								y, width, height, null);
 					} else if (feld[i][j] < 40)
 					{
-						g2d.drawImage(drehen(koerper, deg(feld[i][j] - 40)), x, y,
-								width, height, null);
+						g2d.drawImage(drehen(koerper, deg(feld[i][j] - 40)), x,
+								y, width, height, null);
 					} else
 					{
-						g2d.drawImage(drehen(kurve, deg(feld[i][j] - 50)), x, y,
-								width, height, null);
+						g2d.drawImage(drehen(kurve, deg(feld[i][j] - 50)), x,
+								y, width, height, null);
 					}
 				}
 			}

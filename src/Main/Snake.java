@@ -167,7 +167,6 @@ public class Snake extends Thread
 		brett.kopf(kopfX, kopfY);
 		if (lastX >= 0 && lastY >= 0)
 		{
-			System.out.println(lastX + " " + lastY);
 			if (schwanzX >= 0 && schwanzY >= 0)
 			{
 				brett.loesche(lastX, lastY, schwanzX, schwanzY);
