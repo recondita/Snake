@@ -1,20 +1,18 @@
-package Main;
+package main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Spielbrett extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	int breite = 10;
-	int hoehe = 10;
+	int breite = 30;
+	int hoehe = 40;
 	int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
@@ -133,15 +131,28 @@ public class Spielbrett extends JPanel
 				BufferedImage.TYPE_INT_ARGB);
 		try
 		{
-			grund = ImageIO.read(new File("res/Boden.png"));
-			kopf = ImageIO.read(new File("res/Snake_Kopf.png"));
-			schwanz = ImageIO.read(new File("res/Snake_Schwanz.png"));
-			koerper = ImageIO.read(new File("res/Snake_Koerper.png"));
-			kurve = ImageIO.read(new File("res/Snake_Kurve.png"));
-			apfel = ImageIO.read(new File("res/apfel.png"));
-		} catch (IOException e)
+			grund.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/Boden.png")).getImage(), 0, 0,
+					width, height, null);
+			kopf.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/Snake_Kopf.png")).getImage(), 0, 0,
+					width, height, null);
+			schwanz.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/Snake_Schwanz.png")).getImage(), 0, 0,
+					width, height, null);
+			koerper.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/Snake_Koerper.png")).getImage(), 0, 0,
+					width, height, null);
+			kurve.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/Snake_Kurve.png")).getImage(), 0, 0,
+					width, height, null);
+			apfel.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
+					.getResource("main/bilder/apfel.png")).getImage(), 0, 0,
+					width, height, null);
+		} catch (Exception e)
 		{
 			System.out.println("Bild nicht gefunden!");
+			e.printStackTrace();
 		}
 		for (int i = 0; i < breite; i++)
 		{
