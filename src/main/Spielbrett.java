@@ -35,8 +35,6 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		kopfCacheX = getBreite() / 2;
-		kopfCacheY = getHoehe() / 2;
 		wipe();
 		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
 	}
@@ -46,7 +44,7 @@ public class Spielbrett extends JPanel
 		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLänge: "+ laenge,
 				"Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
-		snake=new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 200, this);
+		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
 		start();
 	}
 
@@ -70,6 +68,8 @@ public class Spielbrett extends JPanel
 			}
 		}
 		neuerApfel();
+		kopfCacheX = getBreite() / 2;
+		kopfCacheY = getHoehe() / 2;
 	}
 	
 	public void loesche(int x, int y, int schwanzX, int schwanzY)
