@@ -12,7 +12,9 @@ public class Snake extends Thread
 	private long wait;
 	public int schwanzX;
 	public int schwanzY;
-	private int laenge=1;
+	private int laenge = 1;
+	private boolean verarbeitet = true;
+	private int rcache=-1;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -28,24 +30,41 @@ public class Snake extends Thread
 
 	public void links()
 	{
-		richtung = 3;
+
+		setRichtung(3);
 	}
 
 	public void rechts()
 	{
-		richtung = 1;
+		setRichtung(1);
 	}
 
 	public void hoch()
 	{
-		richtung = 2;
+		setRichtung(2);
 	}
 
 	public void runter()
 	{
-		richtung = 0;
+		setRichtung(0);
 	}
 
+	private void setRichtung(int r)
+	{
+		synchronized (snake)
+		{
+			if (verarbeitet)
+			{
+				richtung = r;
+				verarbeitet = false;
+			}
+			else
+			{
+				rcache=r;
+			}
+
+		}
+	}
 
 	private class SnakeList
 	{
@@ -69,53 +88,67 @@ public class Snake extends Thread
 
 		public byte move(int x, int y)
 		{
-			if (x < 0 || y < 0 || x >= brett.getBreite()
-					|| y >= brett.getHoehe() || brett.belegt(x, y))
-				return -1;
-			if (x != brett.apfelX || y != brett.apfelY)
+			synchronized (this)
 			{
-				SnakeList last = this;
-				if (next != null)
+				if (x < 0 || y < 0 || x >= brett.getBreite()
+						|| y >= brett.getHoehe() || brett.belegt(x, y))
+					return -1;
+				if (x != brett.apfelX || y != brett.apfelY)
 				{
-					SnakeList temp = this;
-					while (temp != null)
+					SnakeList last = this;
+					if (next != null)
 					{
-						// if (x == temp.x && y == temp.y)
-						// return -1;
-						if (temp.next.next == null)
+						SnakeList temp = this;
+						while (temp != null)
 						{
-							schwanzX = temp.x;
-							schwanzY = temp.y;
-							last = temp.next;
-							temp.next = null;
+							// if (x == temp.x && y == temp.y)
+							// return -1;
+							if (temp.next.next == null)
+							{
+								schwanzX = temp.x;
+								schwanzY = temp.y;
+								last = temp.next;
+								temp.next = null;
+							}
+							temp = temp.next;
 						}
-						temp = temp.next;
+
+						last.next = this;
 					}
-
-					last.next = this;
+					rcache();
+					lastX = last.x;
+					lastY = last.y;
+					kopfX = last.x = x;
+					kopfY = last.y = y;
+					snake = last;
+					return 0;
 				}
-				lastX = last.x;
-				lastY = last.y;
-				kopfX = last.x = x;
-				kopfY = last.y = y;
-				snake = last;
-
-				return 0;
+				rcache();
+				lastX = -1;
+				lastY = -1;
+				snake = new SnakeList(x, y, snake);
+				kopfX = x;
+				kopfY = y;
+				laenge++;
+				return 1;
 			}
-
-			lastX = -1;
-			lastY = -1;
-			snake = new SnakeList(x, y, snake);
-			kopfX = x;
-			kopfY = y;
-			laenge++;
-			return 1;
-
 		}
 
 	}
 
-
+	private void rcache()
+	{
+		if (!verarbeitet)
+		{
+			if(rcache>=0)
+			richtung = rcache;
+			else
+			verarbeitet = true;
+			rcache=-1;
+		}
+	}
+	
+	
 	public void run()
 	{
 		int ok = 0;
