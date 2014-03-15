@@ -6,18 +6,22 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Spielbrett extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	int breite = 30;
-	int hoehe = 40;
-	int[][] feld = new int[breite][hoehe];
+	private int breite = 30;
+	private int hoehe = 40;
+	private int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
-	Snake snake; 
-	private boolean ausgabe=true;
+	Snake snake;
+	int apfelX;
+	int apfelY;
+
+	// private boolean ausgabe=true;
 
 	/*
 	 * 0=nichts 1=Apfel 10=Schlangenkopf 11=Schlangenkopf nach oben
@@ -33,7 +37,25 @@ public class Spielbrett extends JPanel
 	{
 		kopfCacheX = getBreite() / 2;
 		kopfCacheY = getHoehe() / 2;
+		wipe();
 		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
+	}
+
+	public void verloren(int laenge)
+	{
+		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLaenge: "+ laenge,
+				"Super Snake", JOptionPane.WARNING_MESSAGE);
+		wipe();
+		snake=new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
+	}
+
+	public boolean belegt(int x, int y)
+	{
+		return feld[x][y] > 1;
+	}
+
+	private void wipe()
+	{
 		for (int i = 0; i < breite; i++)
 		{
 			for (int j = 0; j < hoehe; j++)
@@ -43,12 +65,7 @@ public class Spielbrett extends JPanel
 		}
 		neuerApfel();
 	}
-
-	public boolean belegt(int x, int y)
-	{
-		return feld[x][y] > 1;
-	}
-
+	
 	public void loesche(int x, int y, int schwanzX, int schwanzY)
 	{
 		loesche(x, y);
@@ -88,7 +105,9 @@ public class Spielbrett extends JPanel
 			if (feld[x][y] == 0)
 			{
 				feld[x][y] = 1;
-				snake.apfel(x, y);
+				//snake.apfel(x, y);
+				apfelX=x;
+				apfelY=y;
 
 			} else
 				neuerApfel();
@@ -131,24 +150,43 @@ public class Spielbrett extends JPanel
 				BufferedImage.TYPE_INT_ARGB);
 		try
 		{
-			grund.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/Boden.png")).getImage(), 0, 0,
-					width, height, null);
-			kopf.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/Snake_Kopf.png")).getImage(), 0, 0,
-					width, height, null);
-			schwanz.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/Snake_Schwanz.png")).getImage(), 0, 0,
-					width, height, null);
-			koerper.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/Snake_Koerper.png")).getImage(), 0, 0,
-					width, height, null);
-			kurve.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/Snake_Kurve.png")).getImage(), 0, 0,
-					width, height, null);
-			apfel.getGraphics().drawImage(new ImageIcon(this.getClass().getClassLoader()
-					.getResource("main/bilder/apfel.png")).getImage(), 0, 0,
-					width, height, null);
+			grund.getGraphics().drawImage(
+					new ImageIcon(this.getClass().getClassLoader()
+							.getResource("main/bilder/Boden.png")).getImage(),
+					0, 0, width, height, null);
+			kopf.getGraphics()
+					.drawImage(
+							new ImageIcon(this.getClass().getClassLoader()
+									.getResource("main/bilder/Snake_Kopf.png"))
+									.getImage(),
+							0, 0, width, height, null);
+			schwanz.getGraphics()
+					.drawImage(
+							new ImageIcon(this
+									.getClass()
+									.getClassLoader()
+									.getResource(
+											"main/bilder/Snake_Schwanz.png"))
+									.getImage(),
+							0, 0, width, height, null);
+			koerper.getGraphics()
+					.drawImage(
+							new ImageIcon(this
+									.getClass()
+									.getClassLoader()
+									.getResource(
+											"main/bilder/Snake_Koerper.png"))
+									.getImage(),
+							0, 0, width, height, null);
+			kurve.getGraphics()
+					.drawImage(
+							new ImageIcon(this.getClass().getClassLoader()
+									.getResource("main/bilder/Snake_Kurve.png"))
+									.getImage(), 0, 0, width, height, null);
+			apfel.getGraphics().drawImage(
+					new ImageIcon(this.getClass().getClassLoader()
+							.getResource("main/bilder/apfel.png")).getImage(),
+					0, 0, width, height, null);
 		} catch (Exception e)
 		{
 			System.out.println("Bild nicht gefunden!");

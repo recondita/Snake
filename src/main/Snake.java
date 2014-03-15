@@ -10,8 +10,6 @@ public class Snake extends Thread
 	private Spielbrett brett;
 	private int richtung;
 	private long wait;
-	private int apfelX;
-	private int apfelY;
 	public int schwanzX;
 	public int schwanzY;
 	private int laenge=1;
@@ -49,11 +47,6 @@ public class Snake extends Thread
 		richtung = 0;
 	}
 
-	public void apfel(int x, int y)
-	{
-		apfelX = x;
-		apfelY = y;
-	}
 
 	private class SnakeList
 	{
@@ -80,7 +73,7 @@ public class Snake extends Thread
 			if (x < 0 || y < 0 || x >= brett.getBreite()
 					|| y >= brett.getHoehe() || brett.belegt(x, y))
 				return -1;
-			if (x != apfelX || y != apfelY)
+			if (x != brett.apfelX || y != brett.apfelY)
 			{
 				SnakeList last = this;
 				if (next != null)
@@ -123,25 +116,6 @@ public class Snake extends Thread
 
 	}
 
-	public int getKopfX()
-	{
-		return kopfX;
-	}
-
-	public int getKopfY()
-	{
-		return kopfY;
-	}
-
-	public int getLastX()
-	{
-		return lastX;
-	}
-
-	public int getLastY()
-	{
-		return lastY;
-	}
 
 	public void run()
 	{
@@ -161,7 +135,7 @@ public class Snake extends Thread
 			if (ok == 1)
 				brett.neuerApfel();
 		}
-		System.out.println("Game Over!!!\nLaenge: "+laenge);
+		brett.verloren(laenge);
 	}
 
 	private void aktualisiereBrett()
