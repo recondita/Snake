@@ -47,8 +47,14 @@ public class Spielbrett extends JPanel
 				"Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
 		snake=new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 200, this);
+		start();
 	}
 
+	public void start()
+	{
+		snake.start();
+	}
+	
 	public boolean belegt(int x, int y)
 	{
 		return feld[x][y] > 1;

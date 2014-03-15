@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 public class GUI extends JFrame implements KeyListener
@@ -22,6 +23,9 @@ public class GUI extends JFrame implements KeyListener
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(brett.getBreite()*40, brett.getHoehe()*40);
 		setVisible(true);
+		JOptionPane.showMessageDialog(null, "Start",
+				"Super Snake", JOptionPane.WARNING_MESSAGE);
+		brett.start();
 	}
 
 	public void keyPressed(KeyEvent e)

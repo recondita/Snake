@@ -24,7 +24,6 @@ public class Snake extends Thread
 		this.wait = warte;
 		schwanzX = -1;
 		schwanzY = -1;
-		start();
 	}
 
 	public void links()
