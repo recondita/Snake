@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 public class Spielbrett extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private int breite = 30;
-	private int hoehe = 40;
+	private int breite = 20;
+	private int hoehe = 20;
 	private int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
@@ -46,7 +46,7 @@ public class Spielbrett extends JPanel
 		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLaenge: "+ laenge,
 				"Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
-		snake=new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
+		snake=new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 200, this);
 	}
 
 	public boolean belegt(int x, int y)

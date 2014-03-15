@@ -20,7 +20,7 @@ public class GUI extends JFrame implements KeyListener
 		add(brett);
 		addKeyListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(brett.getBreite()*20, brett.getHoehe()*20);
+		setSize(brett.getBreite()*40, brett.getHoehe()*40);
 		setVisible(true);
 	}
 
