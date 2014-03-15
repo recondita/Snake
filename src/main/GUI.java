@@ -57,6 +57,13 @@ public class GUI extends JFrame implements KeyListener
 		{
 			brett.snake.runter();
 		}
+		if (taste=='P')
+		{
+			synchronized(brett.snake)
+			{
+			 brett.snake.togglePause();
+			}
+		}
 	}
 	
 	public static void main(String args[])

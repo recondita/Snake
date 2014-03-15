@@ -14,7 +14,8 @@ public class Snake extends Thread
 	public int schwanzY;
 	private int laenge = 1;
 	private boolean verarbeitet = true;
-	private int rcache=-1;
+	private int rcache = -1;
+	private boolean fPause;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -57,10 +58,9 @@ public class Snake extends Thread
 			{
 				richtung = r;
 				verarbeitet = false;
-			}
-			else
+			} else
 			{
-				rcache=r;
+				rcache = r;
 			}
 
 		}
@@ -140,15 +140,14 @@ public class Snake extends Thread
 	{
 		if (!verarbeitet)
 		{
-			if(rcache>=0)
-			richtung = rcache;
+			if (rcache >= 0)
+				richtung = rcache;
 			else
-			verarbeitet = true;
-			rcache=-1;
+				verarbeitet = true;
+			rcache = -1;
 		}
 	}
-	
-	
+
 	public void run()
 	{
 		int ok = 0;
@@ -160,7 +159,18 @@ public class Snake extends Thread
 				Thread.sleep(wait);
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace();
+			}
+			synchronized (this)
+			{
+				while (fPause)
+				{
+					try
+					{
+						wait();
+					} catch (Exception e)
+					{
+					}
+				}
 			}
 			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
 					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
@@ -182,5 +192,12 @@ public class Snake extends Thread
 				brett.loesche(lastX, lastY);
 		}
 		brett.repaint();
+	}
+
+	public void togglePause()
+	{
+		fPause = !fPause;
+		if(!fPause)
+			notify();
 	}
 }
