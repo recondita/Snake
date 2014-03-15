@@ -43,7 +43,7 @@ public class Spielbrett extends JPanel
 
 	public void verloren(int laenge)
 	{
-		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLaenge: "+ laenge,
+		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLänge: "+ laenge,
 				"Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
 		snake=new Snake(getBreite() / 2, getHoehe() / 2, 1, (long) 200, this);
