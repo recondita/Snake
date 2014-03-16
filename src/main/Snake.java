@@ -52,18 +52,19 @@ public class Snake extends Thread
 
 	private void setRichtung(int r)
 	{
-		synchronized (snake)
-		{
-			if (verarbeitet)
+		if (!fPause)
+			synchronized (snake)
 			{
-				richtung = r;
-				verarbeitet = false;
-			} else
-			{
-				rcache = r;
-			}
+				if (verarbeitet)
+				{
+					richtung = r;
+					verarbeitet = false;
+				} else
+				{
+					rcache = r;
+				}
 
-		}
+			}
 	}
 
 	private class SnakeList
@@ -197,7 +198,7 @@ public class Snake extends Thread
 	public void togglePause()
 	{
 		fPause = !fPause;
-		if(!fPause)
+		if (!fPause)
 			notify();
 	}
 }
