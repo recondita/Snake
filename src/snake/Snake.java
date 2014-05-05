@@ -1,4 +1,4 @@
-package main;
+package snake;
 
 public class Snake extends Thread
 {
@@ -91,6 +91,7 @@ public class Snake extends Thread
 		{
 			synchronized (this)
 			{
+				preMove();
 				if (x < 0 || y < 0 || x >= brett.getBreite()
 						|| y >= brett.getHoehe() || brett.belegt(x, y))
 					return -1;
@@ -195,10 +196,16 @@ public class Snake extends Thread
 		brett.repaint();
 	}
 
+	public void preMove()
+	{
+		
+	}
+	
 	public void togglePause()
 	{
 		fPause = !fPause;
 		if (!fPause)
 			notify();
 	}
+
 }

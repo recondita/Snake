@@ -1,4 +1,4 @@
-package main;
+package snake;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,9 +13,9 @@ public class GUI extends JFrame implements KeyListener
 	
 	Spielbrett brett;
 	
-	public GUI()
+	public GUI(Spielbrett brett)
 	{
-		brett=new Spielbrett();
+		this.brett=brett;
 		setTitle("Super-Snake");
 		setLayout(new GridLayout(1,1));
 		add(brett);
@@ -24,7 +24,17 @@ public class GUI extends JFrame implements KeyListener
 		setSize(brett.getBreite()*40, brett.getHoehe()*40);
 		setVisible(true);
 		JOptionPane.showMessageDialog(null, "Start",
-				"Super Snake", JOptionPane.WARNING_MESSAGE);
+				"Super Snake", JOptionPane.WARNING_MESSAGE);		
+	}
+	
+	public GUI()
+	{
+		this(new Spielbrett());
+	}
+	
+	
+	public void start()
+	{
 		brett.start();
 	}
 
@@ -68,7 +78,8 @@ public class GUI extends JFrame implements KeyListener
 	
 	public static void main(String args[])
 	{
-		new GUI();
+		GUI gui =new GUI();
+		gui.start();
 	}
 	
 }

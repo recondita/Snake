@@ -1,4 +1,4 @@
-package main;
+package snake;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,7 +17,7 @@ public class Spielbrett extends JPanel
 	private int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
-	Snake snake;
+	protected Snake snake;
 	int apfelX;
 	int apfelY;
 
@@ -35,21 +35,27 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		wipe();
-		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
+		wipe();;
 	}
+	
 
 	public void verloren(int laenge)
 	{
-		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLänge: "+ laenge,
+		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nLï¿½nge: "+ laenge,
 				"Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
-		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
 		start();
 	}
 
+	public void newSnake()
+	{
+		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
+		System.out.println("Hook?");
+	}
+	
 	public void start()
 	{
+		newSnake();
 		snake.start();
 	}
 	
@@ -158,12 +164,12 @@ public class Spielbrett extends JPanel
 		{
 			grund.getGraphics().drawImage(
 					new ImageIcon(this.getClass().getClassLoader()
-							.getResource("main/bilder/Boden.png")).getImage(),
+							.getResource("snake/bilder/Boden.png")).getImage(),
 					0, 0, width, height, null);
 			kopf.getGraphics()
 					.drawImage(
 							new ImageIcon(this.getClass().getClassLoader()
-									.getResource("main/bilder/Snake_Kopf.png"))
+									.getResource("snake/bilder/Snake_Kopf.png"))
 									.getImage(),
 							0, 0, width, height, null);
 			schwanz.getGraphics()
@@ -172,7 +178,7 @@ public class Spielbrett extends JPanel
 									.getClass()
 									.getClassLoader()
 									.getResource(
-											"main/bilder/Snake_Schwanz.png"))
+											"snake/bilder/Snake_Schwanz.png"))
 									.getImage(),
 							0, 0, width, height, null);
 			koerper.getGraphics()
@@ -181,17 +187,17 @@ public class Spielbrett extends JPanel
 									.getClass()
 									.getClassLoader()
 									.getResource(
-											"main/bilder/Snake_Koerper.png"))
+											"snake/bilder/Snake_Koerper.png"))
 									.getImage(),
 							0, 0, width, height, null);
 			kurve.getGraphics()
 					.drawImage(
 							new ImageIcon(this.getClass().getClassLoader()
-									.getResource("main/bilder/Snake_Kurve.png"))
+									.getResource("snake/bilder/Snake_Kurve.png"))
 									.getImage(), 0, 0, width, height, null);
 			apfel.getGraphics().drawImage(
 					new ImageIcon(this.getClass().getClassLoader()
-							.getResource("main/bilder/apfel.png")).getImage(),
+							.getResource("snake/bilder/apfel.png")).getImage(),
 					0, 0, width, height, null);
 		} catch (Exception e)
 		{
