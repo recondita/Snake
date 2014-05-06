@@ -89,6 +89,11 @@ public class Spielbrett extends JPanel
 		feld[x][y] = 0;
 	}
 
+	public int getFeld(int x, int y)
+	{
+		return feld[x][y];
+	}
+	
 	public void kopf(int x, int y)
 	{
 		feld[kopfCacheX][kopfCacheY] = 30 + feld[kopfCacheX][kopfCacheY] % 10;

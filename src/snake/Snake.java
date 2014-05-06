@@ -208,4 +208,9 @@ public class Snake extends Thread
 			notify();
 	}
 
+	public int getRichtung()
+	{
+		return richtung;
+	}
+
 }
