@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 public class Spielbrett extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private int breite = 20;
-	private int hoehe = 20;
+	private int breite = 10;
+	private int hoehe = 10;
 	private int[][] feld = new int[breite][hoehe];
 	private int kopfCacheX;
 	private int kopfCacheY;
