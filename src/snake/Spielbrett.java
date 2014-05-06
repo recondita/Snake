@@ -35,7 +35,14 @@ public class Spielbrett extends JPanel
 
 	public Spielbrett()
 	{
-		wipe();;
+		wipe();
+	}
+	
+	public Spielbrett(int breite, int hoehe)
+	{
+		this.breite=breite;
+		this.hoehe=hoehe;
+		wipe();
 	}
 	
 
