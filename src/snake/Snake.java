@@ -1,6 +1,9 @@
 package snake;
 
-public class Snake extends Thread
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class Snake
 {
 	private SnakeList snake;
 	private int kopfX;
@@ -15,7 +18,9 @@ public class Snake extends Thread
 	private int laenge = 1;
 	private boolean verarbeitet = true;
 	private int rcache = -1;
-	private boolean fPause;
+	private boolean fPause = true;
+	private Timer timer;
+	private TimerTask timerTask;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -27,6 +32,7 @@ public class Snake extends Thread
 		this.wait = warte;
 		schwanzX = -1;
 		schwanzY = -1;
+		timer = new Timer();
 	}
 
 	public void links()
@@ -150,36 +156,34 @@ public class Snake extends Thread
 		}
 	}
 
-	public void run()
+	public void start()
+	{
+		fPause = false;
+		timerTask = new TimerTask()
+		{
+
+			@Override
+			public void run()
+			{
+				if(!schritt())
+					cancel();
+			}
+
+		};
+		timer.scheduleAtFixedRate(timerTask, 0, wait);
+	}
+
+	public boolean schritt()
 	{
 		int ok = 0;
-		while (ok >= 0)
-		{
-			aktualisiereBrett();
-			try
-			{
-				Thread.sleep(wait);
-			} catch (InterruptedException e)
-			{
-			}
-			synchronized (this)
-			{
-				while (fPause)
-				{
-					try
-					{
-						wait();
-					} catch (Exception e)
-					{
-					}
-				}
-			}
-			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
-					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
-			if (ok == 1)
-				brett.neuerApfel();
-		}
-		brett.verloren(laenge);
+		ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)), kopfY
+				+ (1 - (richtung & 1)) * (1 - (richtung & 2)));
+		aktualisiereBrett();
+		if (ok == 1)
+			brett.neuerApfel();
+		if (ok < 0)
+			brett.verloren(laenge);
+		return ok>=0;
 	}
 
 	private void aktualisiereBrett()
@@ -198,14 +202,16 @@ public class Snake extends Thread
 
 	public void preMove()
 	{
-		
+
 	}
-	
+
 	public void togglePause()
 	{
 		fPause = !fPause;
 		if (!fPause)
-			notify();
+			start();
+		else
+			timerTask.cancel();
 	}
 
 	public int getRichtung()
