@@ -11,7 +11,7 @@ public class Snake
 	private int lastX = -1;
 	private int lastY = -1;
 	private Spielbrett brett;
-	private int richtung;
+	protected int richtung;
 	private long wait;
 	public int schwanzX;
 	public int schwanzY;
