@@ -18,7 +18,7 @@ public class Snake
 	//private int laenge = 1;
 	private boolean verarbeitet = true;
 	private int rcache = -1;
-	private boolean fPause = true;
+	protected boolean fPause = true;
 	private Timer timer;
 	private TimerTask timerTask;
 	private boolean wachsen=true;
