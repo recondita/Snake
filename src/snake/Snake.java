@@ -192,6 +192,7 @@ public class Snake
 		if (ok == 1)
 		{
 			brett.neuerApfel();
+			neuerApfel();
 			apfel++;
 		}
 		if (ok < 0)
@@ -218,6 +219,11 @@ public class Snake
 
 	}
 
+	public void neuerApfel()
+	{
+		
+	}
+	
 	public void togglePause()
 	{
 		fPause = !fPause;
