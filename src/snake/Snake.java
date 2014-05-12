@@ -15,7 +15,7 @@ public class Snake
 	private long wait;
 	public int schwanzX;
 	public int schwanzY;
-	private int laenge = 1;
+	//private int laenge = 1;
 	private boolean verarbeitet = true;
 	private int rcache = -1;
 	private boolean fPause = true;
@@ -147,7 +147,7 @@ public class Snake
 				snake = new SnakeList(x, y, snake);
 				kopfX = x;
 				kopfY = y;
-				laenge++;
+				//laenge++;
 				return 1;
 			}
 		}
@@ -195,7 +195,7 @@ public class Snake
 			apfel++;
 		}
 		if (ok < 0)
-			brett.verloren(laenge);
+			brett.verloren(apfel);
 		return ok>=0;
 	}
 
