@@ -22,6 +22,7 @@ public class Snake
 	private Timer timer;
 	private TimerTask timerTask;
 	private boolean wachsen=true;
+	private int apfel=0;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -189,7 +190,10 @@ public class Snake
 				+ (1 - (richtung & 1)) * (1 - (richtung & 2)));
 		aktualisiereBrett();
 		if (ok == 1)
+		{
 			brett.neuerApfel();
+			apfel++;
+		}
 		if (ok < 0)
 			brett.verloren(laenge);
 		return ok>=0;
@@ -228,4 +232,8 @@ public class Snake
 		return richtung;
 	}
 
+	public int getApfelCount()
+	{
+		return apfel;
+	}
 }
