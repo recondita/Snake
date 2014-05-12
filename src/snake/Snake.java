@@ -242,4 +242,14 @@ public class Snake
 	{
 		return apfel;
 	}
+	
+	public int getKopfX()
+	{
+		return kopfX;
+	}
+	
+	public int getKopfY()
+	{
+		return kopfY;
+	}
 }
