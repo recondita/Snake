@@ -21,6 +21,7 @@ public class Snake
 	private boolean fPause = true;
 	private Timer timer;
 	private TimerTask timerTask;
+	private boolean wachsen=true;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -33,6 +34,12 @@ public class Snake
 		schwanzX = -1;
 		schwanzY = -1;
 		timer = new Timer();
+	}
+	
+	public Snake(int x, int y, int richtung, long warte, Spielbrett brett, boolean wachsen)
+	{
+		this(x,y,richtung, warte, brett);
+		this.wachsen=wachsen;
 	}
 
 	public void links()
@@ -101,7 +108,7 @@ public class Snake
 				if (x < 0 || y < 0 || x >= brett.getBreite()
 						|| y >= brett.getHoehe() || brett.belegt(x, y))
 					return -1;
-				if (x != brett.apfelX || y != brett.apfelY)
+				if (x != brett.apfelX || y != brett.apfelY|| !wachsen)
 				{
 					SnakeList last = this;
 					if (next != null)
