@@ -136,6 +136,8 @@ public class Snake
 					kopfX = last.x = x;
 					kopfY = last.y = y;
 					snake = last;
+					if(x == brett.apfelX || y == brett.apfelY)
+						return 1;
 					return 0;
 				}
 				rcache();
