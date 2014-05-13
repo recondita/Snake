@@ -71,7 +71,7 @@ public class Spielbrett extends JPanel
 		return feld[x][y] > 1;
 	}
 
-	private void wipe()
+	public void wipe()
 	{
 		for (int i = 0; i < breite; i++)
 		{

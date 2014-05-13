@@ -183,6 +183,11 @@ public class Snake
 		timer.scheduleAtFixedRate(timerTask, 0, wait);
 	}
 
+	public void stopp()
+	{
+		timerTask.cancel();
+	}
+	
 	public boolean schritt()
 	{
 		int ok = 0;
