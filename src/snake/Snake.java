@@ -15,14 +15,14 @@ public class Snake
 	private long wait;
 	public int schwanzX;
 	public int schwanzY;
-	//private int laenge = 1;
+	// private int laenge = 1;
 	private boolean verarbeitet = true;
 	private int rcache = -1;
 	protected boolean fPause = true;
 	private Timer timer;
 	private TimerTask timerTask;
-	private boolean wachsen=true;
-	private int apfel=0;
+	private boolean wachsen = true;
+	private int apfel = 0;
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett)
 	{
@@ -36,11 +36,12 @@ public class Snake
 		schwanzY = -1;
 		timer = new Timer();
 	}
-	
-	public Snake(int x, int y, int richtung, long warte, Spielbrett brett, boolean wachsen)
+
+	public Snake(int x, int y, int richtung, long warte, Spielbrett brett,
+			boolean wachsen)
 	{
-		this(x,y,richtung, warte, brett);
-		this.wachsen=wachsen;
+		this(x, y, richtung, warte, brett);
+		this.wachsen = wachsen;
 	}
 
 	public void links()
@@ -67,7 +68,7 @@ public class Snake
 	private void setRichtung(int r)
 	{
 		if (!fPause)
-			synchronized (snake)
+			synchronized (this)
 			{
 				if (verarbeitet)
 				{
@@ -105,11 +106,10 @@ public class Snake
 		{
 			synchronized (this)
 			{
-				preMove();
 				if (x < 0 || y < 0 || x >= brett.getBreite()
 						|| y >= brett.getHoehe() || brett.belegt(x, y))
 					return -1;
-				if (x != brett.apfelX || y != brett.apfelY|| !wachsen)
+				if (x != brett.apfelX || y != brett.apfelY || !wachsen)
 				{
 					SnakeList last = this;
 					if (next != null)
@@ -137,7 +137,7 @@ public class Snake
 					kopfX = last.x = x;
 					kopfY = last.y = y;
 					snake = last;
-					if(x == brett.apfelX && y == brett.apfelY)
+					if (x == brett.apfelX && y == brett.apfelY)
 						return 1;
 					return 0;
 				}
@@ -147,7 +147,7 @@ public class Snake
 				snake = new SnakeList(x, y, snake);
 				kopfX = x;
 				kopfY = y;
-				//laenge++;
+				// laenge++;
 				return 1;
 			}
 		}
@@ -175,7 +175,7 @@ public class Snake
 			@Override
 			public void run()
 			{
-				if(!schritt())
+				if (!schritt())
 					cancel();
 			}
 
@@ -187,22 +187,26 @@ public class Snake
 	{
 		timerTask.cancel();
 	}
-	
+
 	public boolean schritt()
 	{
-		int ok = 0;
-		ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)), kopfY
-				+ (1 - (richtung & 1)) * (1 - (richtung & 2)));
-		aktualisiereBrett();
-		if (ok == 1)
+		synchronized (this)
 		{
-			brett.neuerApfel();
-			neuerApfel();
-			apfel++;
+			int ok = 0;
+			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
+					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
+			aktualisiereBrett();
+			if (ok == 1)
+			{
+				brett.neuerApfel();
+				neuerApfel();
+				apfel++;
+			}
+			afterMove();
+			if (ok < 0)
+				brett.verloren(apfel);
+			return ok >= 0;
 		}
-		if (ok < 0)
-			brett.verloren(apfel);
-		return ok>=0;
 	}
 
 	private void aktualisiereBrett()
@@ -219,16 +223,16 @@ public class Snake
 		brett.repaint();
 	}
 
-	public void preMove()
+	public void afterMove()
 	{
 
 	}
 
 	public void neuerApfel()
 	{
-		
+
 	}
-	
+
 	public void togglePause()
 	{
 		fPause = !fPause;
@@ -247,12 +251,12 @@ public class Snake
 	{
 		return apfel;
 	}
-	
+
 	public int getKopfX()
 	{
 		return kopfX;
 	}
-	
+
 	public int getKopfY()
 	{
 		return kopfY;
