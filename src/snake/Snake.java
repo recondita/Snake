@@ -185,7 +185,14 @@ public class Snake
 
 	public void stopp()
 	{
-		timerTask.cancel();
+		if (timerTask != null)
+			try
+			{
+				timerTask.cancel();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 	}
 
 	public boolean schritt()
