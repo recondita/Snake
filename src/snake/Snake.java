@@ -34,7 +34,6 @@ public class Snake
 		this.wait = warte;
 		schwanzX = -1;
 		schwanzY = -1;
-		timer = new Timer();
 	}
 
 	public Snake(int x, int y, int richtung, long warte, Spielbrett brett,
@@ -169,6 +168,7 @@ public class Snake
 	public void start()
 	{
 		fPause = false;
+		timer = new Timer();
 		timerTask = new TimerTask()
 		{
 
@@ -195,10 +195,11 @@ public class Snake
 			}
 	}
 
-	public boolean schritt()
+	protected boolean schritt()
 	{
 		synchronized (this)
 		{
+			preMove();
 			int ok = 0;
 			ok = snake.move(kopfX + (richtung & 1) * (1 - (richtung & 2)),
 					kopfY + (1 - (richtung & 1)) * (1 - (richtung & 2)));
@@ -233,6 +234,11 @@ public class Snake
 	public void afterMove()
 	{
 
+	}
+	
+	public void preMove()
+	{
+		
 	}
 
 	public void neuerApfel()
