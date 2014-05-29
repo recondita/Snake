@@ -64,6 +64,9 @@ public class Snake
 		setRichtung(0);
 	}
 
+	/**
+	 * Setzt die Richtung die durch einen Integer von 0-3 repraesentiert wird
+	 */
 	private void setRichtung(int r)
 	{
 		if (!fPause)
@@ -165,6 +168,9 @@ public class Snake
 		}
 	}
 
+	/**
+	 * Startet den Timer der die Schritte ausloest
+	 */
 	public void start()
 	{
 		fPause = false;
@@ -195,6 +201,10 @@ public class Snake
 			}
 	}
 
+	/**
+	 * Laesst die Schlange in eine Bewegung in die entsprechende Richtung machen
+	 * Ist Synchonisiert
+	 */
 	protected boolean schritt()
 	{
 		synchronized (this)
@@ -231,16 +241,25 @@ public class Snake
 		brett.repaint();
 	}
 
+	/**
+	 * Wird nach jedem Schritt aufgerufen
+	 */
 	public void afterMove()
 	{
 
 	}
 	
+	/**
+	 * Wird vor jedem Schritt aufgerufent
+	 */
 	public void preMove()
 	{
 		
 	}
 
+	/**
+	 * Wird immer nach dem Fressen eines Apfels aufgerufen
+	 */
 	public void neuerApfel()
 	{
 

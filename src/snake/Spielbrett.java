@@ -37,35 +37,47 @@ public class Spielbrett extends JPanel
 	{
 		wipe();
 	}
-	
+
 	public Spielbrett(int breite, int hoehe)
 	{
-		this.breite=breite;
-		this.hoehe=hoehe;
+		this.breite = breite;
+		this.hoehe = hoehe;
 		wipe();
 	}
-	
 
+	/**
+	 * 
+	 * Wird aufgerufen wenn das Spiel verloren ist und gibt eine entsprechende
+	 * Meldung aus
+	 * @param laenge So viele Aepfel hat die Schlange gefressen
+	 */
 	public void verloren(int laenge)
 	{
-		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nL�nge: "+ laenge,
-				"Super Snake", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Sie haben verloren ;(\nL�nge: "
+				+ laenge, "Super Snake", JOptionPane.WARNING_MESSAGE);
 		wipe();
 		start();
 	}
 
+	/**
+	 * Erstellt eine neue Schlange
+	 */
 	public void newSnake()
 	{
 		snake = new Snake(kopfCacheX, kopfCacheY, 1, (long) 200, this);
 		System.out.println("Hook?");
 	}
+
 	
+	/**
+	 * Startet das Spiel
+	 */
 	public void start()
 	{
 		newSnake();
 		snake.start();
 	}
-	
+
 	public boolean belegt(int x, int y)
 	{
 		return feld[x][y] > 1;
@@ -84,7 +96,7 @@ public class Spielbrett extends JPanel
 		kopfCacheX = getBreite() / 2;
 		kopfCacheY = getHoehe() / 2;
 	}
-	
+
 	public void loesche(int x, int y, int schwanzX, int schwanzY)
 	{
 		loesche(x, y);
@@ -100,7 +112,7 @@ public class Spielbrett extends JPanel
 	{
 		return feld[x][y];
 	}
-	
+
 	public void kopf(int x, int y)
 	{
 		feld[kopfCacheX][kopfCacheY] = 30 + feld[kopfCacheX][kopfCacheY] % 10;
@@ -129,9 +141,9 @@ public class Spielbrett extends JPanel
 			if (feld[x][y] == 0)
 			{
 				feld[x][y] = 1;
-				//snake.apfel(x, y);
-				apfelX=x;
-				apfelY=y;
+				// snake.apfel(x, y);
+				apfelX = x;
+				apfelY = y;
 
 			} else
 				neuerApfel();
@@ -182,8 +194,7 @@ public class Spielbrett extends JPanel
 					.drawImage(
 							new ImageIcon(this.getClass().getClassLoader()
 									.getResource("snake/bilder/Snake_Kopf.png"))
-									.getImage(),
-							0, 0, width, height, null);
+									.getImage(), 0, 0, width, height, null);
 			schwanz.getGraphics()
 					.drawImage(
 							new ImageIcon(this
@@ -204,8 +215,11 @@ public class Spielbrett extends JPanel
 							0, 0, width, height, null);
 			kurve.getGraphics()
 					.drawImage(
-							new ImageIcon(this.getClass().getClassLoader()
-									.getResource("snake/bilder/Snake_Kurve.png"))
+							new ImageIcon(
+									this.getClass()
+											.getClassLoader()
+											.getResource(
+													"snake/bilder/Snake_Kurve.png"))
 									.getImage(), 0, 0, width, height, null);
 			apfel.getGraphics().drawImage(
 					new ImageIcon(this.getClass().getClassLoader()
